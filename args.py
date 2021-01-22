@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2021-01-22 09:27:13
-LastEditTime: 2021-01-22 10:41:23
+LastEditTime: 2021-01-22 11:06:09
 LastEditors: Please set LastEditors
 Description: In User Settings Edit
 FilePath: /pytorch-AAPR/args.py
@@ -21,7 +21,7 @@ parser.add_argument('--nl', dest='num_layers', type=int, default=2)
 parser.add_argument('--lr', dest='learning_rate', type=float, default=0.01)
 parser.add_argument('--dr', dest='dropout_rate', type=float, default=0.1)
 parser.add_argument('--vs', dest='vocab_size', type=int, default=40000)
-parser.add_argument('--gpu', dest='gpu', type=int, default=-1)
+parser.add_argument('--gpu', dest='gpu', type=int, default=6)
 # parser.add_argument('--loss', dest='loss', type=str, default='Focal')
 # parser.add_argument('--logdp', dest='log_datapath', type=str, default='./log/')
 parser.add_argument('--wghdp', dest='weight_datapath', type=str, default='./weight/')

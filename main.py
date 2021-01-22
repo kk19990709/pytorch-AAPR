@@ -19,6 +19,14 @@ print('import done')
 # endregion
 
 # %%
+# region args
+if torch.cuda.is_available() and opt.gpu >= 0:
+    device = torch.device('cuda:' + str(opt.gpu))
+else:
+    device = torch.device('cpu')
+print(torch.cuda.get_device_name(), device)
+# endregion
+# %%
 # region Data set & Data loader
 if opt.minidata:
     checkpoint = './dataset_mini/checkpoint.pkl'
@@ -64,22 +72,18 @@ INTRO = Field(tokenize=word_tokenize, lower=True)
 RELAT = Field(tokenize=word_tokenize, lower=True)
 METHO = Field(tokenize=word_tokenize, lower=True)
 CONCL = Field(tokenize=word_tokenize, lower=True)
-VENUE = Field(preprocessing=(lambda x: 0 if x == 'CoRR' or x ==
-                             'No' else 1), sequential=False, use_vocab=False)
+VENUE = Field(preprocessing=(lambda x: 0 if x == 'CoRR' or x == 'No' else 1), sequential=False, use_vocab=False)
 fields = [('abstr', ABSTR), ('title', TITLE), ('autho', AUTHO),
           ('categ', CATEG), ('venue', VENUE), ('intro', INTRO),
           ('relat', RELAT), ('metho', METHO), ('concl', CONCL)]
 
 # Dataset
-examples = [Example.fromlist(list(data.iloc[i]), fields)
-            for i in range(data.shape[0])]
+examples = [Example.fromlist(list(data.iloc[i]), fields) for i in range(data.shape[0])]
 dataset = Dataset(examples, fields)
-train, valid, test = dataset.split(
-    split_ratio=[0.6, 0.2, 0.2], stratified=False, strata_field='label')
+train, valid, test = dataset.split(split_ratio=[0.6, 0.2, 0.2], stratified=False, strata_field='label')
 # vocab
 vectors = GloVe(name='6B', dim=300)
-source = [getattr(dataset, item) for item in [
-    'title', 'abstr', 'intro', 'relat', 'metho', 'concl']]
+source = [getattr(dataset, item) for item in ['title', 'abstr', 'intro', 'relat', 'metho', 'concl']]
 TITLE.build_vocab(source, vectors=vectors, max_size=opt.vocab_size)
 TITLE.vocab.vectors.unk_init = init.xavier_uniform
 ABSTR.vocab = TITLE.vocab
@@ -92,10 +96,8 @@ CATEG.build_vocab(train)
 
 # Iterator
 if not opt.notrain:
-    train_iter, valid_iter = BucketIterator.splits(
-        (train, valid), batch_size=opt.batch_size, sort=False)
-test_iter = BucketIterator(
-    test, batch_size=opt.batch_size, sort=False, train=False, shuffle=False)
+    train_iter, valid_iter = BucketIterator.splits((train, valid), batch_size=opt.batch_size, sort=False)
+test_iter = BucketIterator(test, batch_size=opt.batch_size, sort=False, train=False, shuffle=False)
 print('preprocess done')
 # endregion
 
