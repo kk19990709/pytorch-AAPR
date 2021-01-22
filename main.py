@@ -20,11 +20,18 @@ print('import done')
 
 # %%
 # region Data set & Data loader
+if opt.minidata:
+    checkpoint = './dataset_mini/checkpoint.pkl'
+else:
+    checkpoint = './dataset/checkpoint.pkl'
 if opt.makedata:
     with open('./data/data1', 'r', encoding='utf-8') as f:
         data = json.load(f)
     data = pd.json_normalize(data.values(), max_level=0)
-    data = data.head(160)
+    if opt.minidata:
+        data = data.head(160)
+    else:
+        data = data.head(opt.datasize)
     name_dict = {'abstract': 'abstr', 'authors': 'autho', 'category': 'categ'}
     data = data.rename(columns=name_dict)
     data['intro'] = None
@@ -39,11 +46,9 @@ if opt.makedata:
         data['metho'].iloc[i] = metho
         data['concl'].iloc[i] = concl
     data = data.drop(columns='tex_data')
-    checkpoint = './dataset_mini/checkpoint.pkl'
     torch.save(data, checkpoint)
     print('data has just finish been processed')
 else:
-    checkpoint = './dataset_mini/checkpoint.pkl'
     data = torch.load(checkpoint)
     print('data has just finish been loaded')
 # endregion

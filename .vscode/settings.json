@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "F:\\Anaconda\\envs\\py37\\python.exe",
+    "python.pythonPath": "/home/deeplearning/anaconda3/envs/kk_py37/bin/python",
     "git.ignoreLimitWarning": true
 }
