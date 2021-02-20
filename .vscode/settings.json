@@ -1,4 +1,17 @@
 {
-    "python.pythonPath": "/home/deeplearning/anaconda3/envs/kk_py37/bin/python",
-    "git.ignoreLimitWarning": true
+    "python.pythonPath": "F:\\Anaconda\\envs\\py37\\python.exe",
+    "git.ignoreLimitWarning": true,
+    "cSpell.words": [
+        "AAGRU",
+        "AAPR",
+        "AGRU",
+        "AUTHO",
+        "METHO",
+        "abstr",
+        "categ",
+        "cnns",
+        "concl",
+        "relat",
+        "wghdp"
+    ],
 }

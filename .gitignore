@@ -1,5 +1,7 @@
-/.vector_cache
-/data
-/dataset
-/dataset_mini
-/weight
+.vector_cache
+data
+dataset
+dataset_mini
+weight
+model/__pycache__
+src/__pycache__
